@@ -59,6 +59,7 @@ $(document).ready(function () {
     function updateScreen() {
         $('#screen').val(currentValue);
     }
+    
     function performCalculation() {
         memory.push(parseFloat(currentValue));
     
