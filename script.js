@@ -58,6 +58,18 @@ $(document).ready(function () {
 
     function updateScreen() {
         $('#screen').val(currentValue);
+        console.log(joinValuesAndOperators())
+    }
+
+    function joinValuesAndOperators() {
+        const resultArray = [];
+        for (let i = 0; i < memory.length; i++) {
+            resultArray.push(memory[i]);
+            if (i < operators.length) {
+                resultArray.push(operators[i]);
+            }
+        }
+        return resultArray;
     }
     
     function performCalculation() {
