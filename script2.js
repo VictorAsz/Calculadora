@@ -81,7 +81,7 @@ $(document).ready(function () {
         },
 
         containsDivisionByZero: function (expression) {
-            // Verifica se a expressão contém uma divisão por zero
+          
             return /\b\/\s*0\b/.test(expression);
         }
         
