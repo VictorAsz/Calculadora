@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    // Objeto da calculadora
     const calculator = {
         currentValue: '',
 
@@ -8,17 +9,13 @@ $(document).ready(function () {
 
         attachEvents: function () {
             $('.digit').on('click',
-                () => this.appendDigit($(target).text()));
-
+                (event) => this.appendDigit($(event.target).text()));
             $('.operator').on('click',
-                () => this.appendOperator($(target).text()));
-
+                (event) => this.appendOperator($(event.target).text()));
             $('#equal').on('click',
                 () => this.performCalculation());
-
-            $('#clear').on('click', 
+            $('#clear').on('click',
                 () => this.clearMemory());
-
             $('#backspace').on('click',
                 () => this.backspace());
         },
