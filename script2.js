@@ -4,7 +4,14 @@ $(document).ready(function () {
 
     $('.digit').on('click', function () {
         const digitValue = $(this).text();
-        appendValue(digitValue);
+
+        function isLastCharacterDot(expression) {
+            return /[\.]$/.test(expression);
+        }
+
+        if (!isLastCharacterDot(currentValue)) {
+            appendValue(digitValue);
+        }
     });
     $('.operator').on('click', function () {
 
@@ -44,6 +51,7 @@ $(document).ready(function () {
     }
 
     function appendValue(value) {
+     
         currentValue += value;
         updateScreen();
     }
