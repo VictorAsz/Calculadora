@@ -1,82 +1,83 @@
 $(document).ready(function () {
-    let currentValue = '';
-    const elementos = currentValue.split(/[\+\-\*\/]/);
+    const calculator = {
+        currentValue: '',
 
-    $('.digit').on('click', function () {
-        const digitValue = $(this).text();
-        appendValue(digitValue);
-    });
-    $('.operator').on('click', function () {
+        init: function () {
+            this.attachEvents();
+        },
 
-        const digitOperator = $(this).text();
-        
-        function isLastCharacterOperator(expression) {
-            return /[\+\-\*\/]$/.test(expression);
-        }
+        attachEvents: function () {
+            $('.digit').on('click',
+                () => this.appendDigit($(target).text()));
 
-        if (!isLastCharacterOperator(currentValue)) {
-            appendValue(digitOperator);
-        }
-    });
+            $('.operator').on('click',
+                () => this.appendOperator($(target).text()));
 
-    $('#equal').on('click', function () {
-        performCalculation()
-    })
+            $('#equal').on('click',
+                () => this.performCalculation());
 
-    $('#clear').on('click', function () {
-        clearMemory();
-    })
+            $('#clear').on('click', 
+                () => this.clearMemory());
 
-    $('#backspace').on('click', function () {
-        backspace();
-    });
+            $('#backspace').on('click',
+                () => this.backspace());
+        },
 
-    function backspace() {
-        currentValue = currentValue.slice(0, -1);
-        updateScreen();
-    }
+        appendDigit: function (digit) {
+            if (digit === '.' && !this.endsWithNumber(this.currentValue)) {
+                return;
+            }
+            this.currentValue += digit;
+            this.updateScreen();
+        },
 
-    function clearMemory() {
-        currentValue = '';
-        updateScreen();
-        console.log(memory)
-        console.log(operators)
-    }
+        appendOperator: function (operator) {
+            if (!this.endsWithOperator(this.currentValue)) {
+                this.currentValue += operator;
+                this.updateScreen();
+            }
+        },
 
-    function appendValue(value) {
-        function endsWithNumber(expression) {
+        performCalculation: function () {
+            try {
+                this.currentValue = this.validateExpression(this.currentValue);
+                this.currentValue = eval(this.currentValue);
+                this.updateScreen();
+            } catch (error) {
+                alert('Erro ao calcular a expressão');
+            }
+        },
 
-            return /[0-9]$/.test(expression);
-        }
-        if (value === '.' && !endsWithNumber(currentValue)) {
-            return;
-        }
-        currentValue += value;
-        updateScreen();
-    }
+        backspace: function () {
+            this.currentValue = this.currentValue.slice(0, -1);
+            this.updateScreen();
+        },
 
+        clearMemory: function () {
+            this.currentValue = '';
+            this.updateScreen();
+        },
 
-    function updateScreen() {
-        $('#screen').val(currentValue);
-        console.log(joinValuesAndOperators())
-    }
-    
-    function validateExpression(expression){
+        updateScreen: function () {
+            $('#screen').val(this.currentValue);
+        },
 
+        validateExpression: function (expression) {
             expression = expression.replace(/÷/g, '/');
             expression = expression.replace(/×/g, '*');
             expression = expression.replace(/[^0-9+\-*\/.()]/g, '');
-            return expression
-          
-    }
+            return expression;
+        },
 
+        endsWithOperator: function (expression) {
+            return /[\+\-\*\/]$/.test(expression);
+        },
 
-    function performCalculation() {
-        
-        currentValue = validateExpression(currentValue);
-        currentValue = eval(currentValue);
-        updateScreen();
-    }
-    
+        endsWithNumber: function (expression) {
+            return /[0-9]$/.test(expression);
+        }
+    };
 
+    // Inicialização da calculadora
+    calculator.init();
 });
