@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    // Objeto da calculadora
     const calculator = {
         currentValue: '',
 
@@ -38,11 +37,18 @@ $(document).ready(function () {
         performCalculation: function () {
             try {
                 this.currentValue = this.validateExpression(this.currentValue);
+
+                if (this.containsDivisionByZero(this.currentValue)) {
+                    throw new Error('Divisão por zero não é permitida.');
+                }
+
                 this.currentValue = eval(this.currentValue);
                 this.updateScreen();
             } catch (error) {
                 alert('Erro ao calcular a expressão');
             }
+
+            
         },
 
         backspace: function () {
@@ -72,9 +78,15 @@ $(document).ready(function () {
 
         endsWithNumber: function (expression) {
             return /[0-9]$/.test(expression);
+        },
+
+        containsDivisionByZero: function (expression) {
+            // Verifica se a expressão contém uma divisão por zero
+            return /\b\/\s*0\b/.test(expression);
         }
+        
     };
 
-    // Inicialização da calculadora
+ 
     calculator.init();
 });
