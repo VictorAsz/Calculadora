@@ -1,11 +1,22 @@
 body {
-    background-color: #f8f8f8;
+    background: linear-gradient(to bottom, #ffffff, #ffcccc);
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
+    animation: wave 10s ease-in-out infinite alternate;
 }
+
+@keyframes wave {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
 
 .wrapper {
     display: flex;
@@ -14,7 +25,7 @@ body {
 }
 
 .title {
-    color: #ff69b4; /* Cor rosa característica da Hello Kitty */
+    color: #ff69b4; 
     font-family: 'Arial', sans-serif;
     font-size: 28px;
     margin-bottom: 20px;
