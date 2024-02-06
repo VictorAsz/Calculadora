@@ -51,7 +51,13 @@ $(document).ready(function () {
     }
 
     function appendValue(value) {
-     
+        function endsWithNumber(expression) {
+
+            return /[0-9]$/.test(expression);
+        }
+        if (value === '.' && !endsWithNumber(currentValue)) {
+            return;
+        }
         currentValue += value;
         updateScreen();
     }
